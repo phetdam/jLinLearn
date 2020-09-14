@@ -1,0 +1,29 @@
+plugins {
+    id "application" // so i can do `gradle run`
+    id "java"
+}
+
+application {
+    // this is in the default package
+    mainClass = "Main"
+}
+
+// junit dependencies (5.3.2 on ubuntu focal)
+dependencies {
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.1"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.1"
+}
+
+// need to tell gradle where to find junit 5 (maven central repo)
+repositories {
+    mavenCentral()
+}
+
+// native junit support
+test {
+    useJUnitPlatform()
+    // show passed, skipped, failed tests
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
