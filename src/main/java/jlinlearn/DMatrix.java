@@ -112,7 +112,7 @@ public class DMatrix {
                 ci_val++;
             }
             // else just write i to ixs_train[ci_train] and increment ci_train
-            else {
+            else if (ci_train < n_val) {
                 ixs_train[ci_train] = i;
                 ci_train++;
             }

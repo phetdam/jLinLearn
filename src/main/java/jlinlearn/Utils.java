@@ -30,8 +30,11 @@ public class Utils {
      * @param rng Random instance for reproducibility across calls.
      * @return Double matrix with shape (n_rows, n_cols)
      */
-    public static double[][] gaussianMatrix(int n_rows, int n_cols,
-        Random rng) {
+    public static double[][] gaussianMatrix(
+        int n_rows,
+        int n_cols,
+        Random rng)
+    {
         // sanity checking
         if (n_rows <= 0) {
             throw new InputMismatchException("n_rows must be positive");
@@ -192,8 +195,11 @@ public class Utils {
      * @param rng Random instance for reproducibility across calls.
      * @return A vector of regression targets, length n_rows.
      */
-    public static double[] regFriedman1Targets(double[][] X, double noise,
-        Random rng) {
+    public static double[] regFriedman1Targets(
+        double[][] X, 
+        double noise,
+        Random rng)
+    {
         // error checks
         if (X == null) {
             throw new NullPointerException("X is null");
@@ -235,39 +241,78 @@ public class Utils {
     }
 
     /**
-     * Selects k ints randomly from {0, ... n - 1}, and returns them as array.
-     * Based on Jon Bentley's Programming Pearls page 127.
+     * Sample indices without replacement from {@code 0, ... n - 1}.
+     * 
+     * Useful for obtaining k random indices to get a subcollection of an array.
+     * By default, the selected indices are in their original ordering.
+     * 
+     * @param rng Seeded java.util.Random instance
+     * @param n Control upper bound of integers, i.e. {@code 0, ... n - 1}
+     * @param k Number of integers to select from {@code 0, ... n - 1},
+     *     {@code k <= n}
+     * @return An int array containing a subset of {@code 0, ... n - 1}
+     */
+    public static int[] randomSubset(Random rng, final int n, int k) {
+        return randomSubset(rng, n, k, false);
+    }
+
+    /**
+     * Sample indices without replacement from {@code 0, ... n - 1}.
      * 
      * Useful for obtaining k random indices to get a subcollection of an array.
      * 
      * @param rng Seeded java.util.Random instance
-     * @param n Control upper bound of integers, i.e. {0, ... n - 1}
-     * @param k Number of integers to select from {0, ... n - 1}, k <= n
-     * @return An int array containing a subset of {0, ... n - 1}
+     * @param n Control upper bound of integers, i.e. {@code 0, ... n - 1}
+     * @param k Number of integers to select from {@code 0, ... n - 1},
+     *     {@code k <= n}
+     * @param shuffle Whether or not to shuffle the returned indices. If this is
+     *     {@code false}, then the elements are in ascending sorted order.
+     * @return An int array containing a subset of {@code 0, ... n - 1}
      */
-    public static int[] randomSubset(Random rng, final int n, int k) {
+    public static int[] randomSubset(
+        Random rng, 
+        final int n, 
+        int k,
+        boolean shuffle)
+    {
         // if k > n, error
         if (k > n) {
             throw new InputMismatchException("k must be <= n");
         }
         // indices to return
         int ixs[] = new int[k];
-        // current index of ixs to write to
+        // total indices selected and total indices already visited
         int ci = 0;
-        // cycle through all {0, ... n - 1}. this guarantees no repeats.
-        for (int i = 0; i < n; i++) {
-            /**
-             * generate a random integer and mod it with n - i. if remainder
-             * falls in {0, ... k - 1}, then select i and decrement k. this
-             * guarantees that we select k elements, and since i increases,
-             * also guarantees that we do end up picking k elements as
-             * P{rand() % (n - i) < k} increases if k is fixed and i increases.
-             */
-            if (rng.nextLong() % (n - i) < k) {
-                ixs[ci] = i;
-                // don't forget to increment ci
+        int ti = 0;
+        // random number in [0, 1)
+        double u;
+        // while total selected < goal
+        while (ci < k) {
+            // uniformly sample
+            u = rng.nextDouble();
+            // not really sure what's going on here :(
+            if ((n - ti) * u >= (k - ci)) {
+
+            }
+            else {
+                ixs[ci] = ti;
                 ci++;
-                k--;
+            }
+            // move onto next index
+            ti++;
+        }
+        // perform fisher-yates shuffle to shuffle the indices if indicated
+        if (shuffle) {
+            for (int i = 0; i < k; i++) {
+                // select index from 0, ... i
+                int j = rng.nextInt(i + 1);
+                // swap elements i and j
+                int temp = ixs[i];
+                ixs[i] = ixs[j];
+                ixs[j] = temp;
+            }
+            for (int i = 0;i < k; i++) {
+                System.out.println(ixs[i]);
             }
         }
         // all done!
