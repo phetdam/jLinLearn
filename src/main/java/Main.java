@@ -22,5 +22,13 @@ public class Main {
         // instantiate DMatrix; use 20% for validation
         DMatrix data = new DMatrix(X, y, rng);
         System.out.printf("%s\n", data.toString());
+        // data preview (only first few elements)
+        for (int i = 0; i < 5; i++) {
+            System.out.printf("%-4d  ", i);
+            for (int j = 0; j < Math.min(data.n_dims, 5); j++) {
+                System.out.printf("%13.6e  ", data.get_X_train()[i][j]);
+            }
+            System.out.printf("---  %2d\n", (int) data.get_y_train()[i]);
+        }
     }
 }
