@@ -3,5 +3,8 @@
 build
 # ignore class files
 **/*.class
-# ignore vs code project folder
+# ignore vs code project folder, .classpath, .settings, and .project
 .vscode
+.classpath
+.settings
+.project
