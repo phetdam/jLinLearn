@@ -12,6 +12,11 @@ Although I may not be able to make significant progress during the school year,
 I do intend to finish this project since it will be a nice exercise for me to
 refresh my knowledge on some linear supervised learning methods.
 
+Inspired by the scikit-learn `SGDClassifier`.
+
+.. __: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.
+   SGDClassifier.html
+
 Loss functions
 --------------
 
