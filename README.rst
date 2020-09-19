@@ -25,17 +25,16 @@ Batch subgradient descent
    regularization using iterative soft thresholding [#]_. For those who are
    interested, there is a derivation of the soft thresholding operator from
    the promixal mapping in the first answer to
-   `this question on the mathematics StackExchange`_.
+   `this question on the mathematics StackExchange`__.
 Stochastic subgradient descent
    Will alse support :math:`l_1`, :math:`l_2`, and naive elastic net
-   regularization using the same methods mentioned above for batch gradient
-   descent.
+   regularization using the same methods mentioned above.
+
+These both will direcly solve the primal formulation of the problem by operating
+on the loss functional directly. Not sure if I plan to implement any methods
+to solve the dual problem.
 
 .. [#] http://www.stat.cmu.edu/~ryantibs/convexopt/lectures/prox-grad.pdf
 
 .. __: https://math.stackexchange.com/questions/471339/derivation-of-soft-
    thresholding-operator-proximal-operator-of-l-1-norm
-
-These both will direcly solve the primal formulation of the problem by operating
-on the loss functional directly. Not sure if I plan to implement any methods
-to solve the dual problem.
