@@ -21,8 +21,8 @@ Least-squares
    Supports :math:`l_1`, :math:`l_2`, and naive elastic-net regularization. See
    `Optimization methods`_ for solving details.
 Logistic
-   Gives a logistic regression classifier. Labels are in :math:`{-1, 1}` and
-   also supports :math:`l_1`, :math:`l_2`, and naive elastic-net regularization.
+   Gives a logistic regression classifier and also supports :math:`l_1`,
+   :math:`l_2`, and naive elastic-net regularization.
 Hinge
    Gives a linear support vector classifier and supports all previously
    mentioned regularization methods.
