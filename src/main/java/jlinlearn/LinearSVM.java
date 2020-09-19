@@ -1,4 +1,4 @@
-package jlinsvm;
+package jlinlearn;
 /**
  * Implementation of class for linear SVM.
  */

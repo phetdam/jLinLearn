@@ -5,7 +5,7 @@
 
 import java.util.Random;
 
-import jlinsvm.DMatrix;
+import jlinlearn.DMatrix;
 
 public class Main {
     

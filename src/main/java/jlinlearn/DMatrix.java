@@ -1,6 +1,8 @@
-package jlinsvm;
+package jlinlearn;
 
 import java.util.*;
+
+import static jlinlearn.Utils.randomSubset;
 
 /**
  * Implementation for a thin data set class.
@@ -91,7 +93,7 @@ public class DMatrix {
         // number of rows in training set
         n_train = n_tot - n_val;
         // indices in the validation set and the training set, respectively
-        int ixs_val[] = random_subset(rng, n_tot, n_val);
+        int ixs_val[] = randomSubset(rng, n_tot, n_val);
         int ixs_train[] = new int[n_train];
         /** 
          * select all the other indices not in ixs_val to be in training set.
@@ -165,47 +167,4 @@ public class DMatrix {
     public double[] get_y_val() {
         return _y_val;
     }
-
-    /** Private methods **/
-
-    /**
-     * Selects k ints randomly from {0, ... n - 1}, and returns them as array.
-     * Based on Jon Bentley's Programming Pearls page 127.
-     * 
-     * Useful for obtaining k random indices to get a subcollection of an array.
-     * 
-     * @param rng Seeded java.util.Random instance
-     * @param n Control upper bound of integers, i.e. {0, ... n - 1}
-     * @param k Number of integers to select from {0, ... n - 1}, k <= n
-     * @return An int array containing a subset of {0, ... n - 1}
-     */
-    private static int[] random_subset(Random rng, final int n, int k) {
-        // if k > n, error
-        if (k > n) {
-            throw new InputMismatchException("k must be <= n");
-        }
-        // indices to return
-        int ixs[] = new int[k];
-        // current index of ixs to write to
-        int ci = 0;
-        // cycle through all {0, ... n - 1}. this guarantees no repeats.
-        for (int i = 0; i < n; i++) {
-            /**
-             * generate a random integer and mod it with n - i. if remainder
-             * falls in {0, ... k - 1}, then select i and decrement k. this
-             * guarantees that we select k elements, and since i increases,
-             * also guarantees that we do end up picking k elements as
-             * P{rand() % (n - i) < k} increases if k is fixed and i increases.
-             */
-            if (rng.nextLong() % (n - i) < k) {
-                ixs[ci] = i;
-                // don't forget to increment ci
-                ci++;
-                k--;
-            }
-        }
-        // all done!
-        return ixs;
-    }
-
 }

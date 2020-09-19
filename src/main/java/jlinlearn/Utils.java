@@ -1,4 +1,4 @@
-package jlinsvm;
+package jlinlearn;
 
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -106,8 +106,8 @@ public class Utils {
      * 
      * Assumes the input matrix is not ragged and has standard Gaussian entries.
      * 
-     * @param X Input matrix, shape (n_rows, n_cols).
-     * @return A n_rows length vector of with only -1s and 1s.
+     * @param X Input matrix, shape {@code (n_rows, n_cols)}.
+     * @return A {@code n_rows} length vector of with only -1s and 1s.
      */
     public static double[] clsHastieTargets(double[][] X) {
         // error checks
@@ -146,6 +146,10 @@ public class Utils {
      * Generates the regression problem described in [1] and [2]. This method
      * does not add any noise to the generated regression targets.
      * 
+     * [1] J. Friedman, Multivariate adaptive regression splines, The Annals of
+     *     Statistics 19 (1), pages 1-67, 1991.
+     * [2] L. Breiman, Bagging predictors, Machine Learning 24, p 123-140, 1996.
+     * 
      * @param X Input matrix, shape (n_rows, n_cols), where n_cols >= 5.
      * @return A vector of regression targets, length n_rows.
      */
@@ -157,6 +161,10 @@ public class Utils {
     /**
      * Generates the regression problem described in [1] and [2]. If noise > 0,
      * the output vector will be stochastic, with added Gaussian noise.
+     * 
+     * [1] J. Friedman, Multivariate adaptive regression splines, The Annals of
+     *     Statistics 19 (1), pages 1-67, 1991.
+     * [2] L. Breiman, Bagging predictors, Machine Learning 24, p 123-140, 1996.
      * 
      * @param X Input matrix, shape (n_rows, n_cols), where n_cols >= 5.
      * @param noise Standard deviation of Gaussian noise to apply to the output.
@@ -224,5 +232,45 @@ public class Utils {
             }
         }
         return y;
+    }
+
+    /**
+     * Selects k ints randomly from {0, ... n - 1}, and returns them as array.
+     * Based on Jon Bentley's Programming Pearls page 127.
+     * 
+     * Useful for obtaining k random indices to get a subcollection of an array.
+     * 
+     * @param rng Seeded java.util.Random instance
+     * @param n Control upper bound of integers, i.e. {0, ... n - 1}
+     * @param k Number of integers to select from {0, ... n - 1}, k <= n
+     * @return An int array containing a subset of {0, ... n - 1}
+     */
+    public static int[] randomSubset(Random rng, final int n, int k) {
+        // if k > n, error
+        if (k > n) {
+            throw new InputMismatchException("k must be <= n");
+        }
+        // indices to return
+        int ixs[] = new int[k];
+        // current index of ixs to write to
+        int ci = 0;
+        // cycle through all {0, ... n - 1}. this guarantees no repeats.
+        for (int i = 0; i < n; i++) {
+            /**
+             * generate a random integer and mod it with n - i. if remainder
+             * falls in {0, ... k - 1}, then select i and decrement k. this
+             * guarantees that we select k elements, and since i increases,
+             * also guarantees that we do end up picking k elements as
+             * P{rand() % (n - i) < k} increases if k is fixed and i increases.
+             */
+            if (rng.nextLong() % (n - i) < k) {
+                ixs[ci] = i;
+                // don't forget to increment ci
+                ci++;
+                k--;
+            }
+        }
+        // all done!
+        return ixs;
     }
 }
