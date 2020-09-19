@@ -46,7 +46,7 @@ Stochastic [sub]gradient descent
    regularization using iterative soft thresholding.
 
 
-These both will direcly solve the primal formulation of the problem by operating
+These both will directly solve the primal formulation of the problem by operating
 on the loss functional directly. Not sure if I plan to implement any methods
 to solve the dual problem.
 
