@@ -216,9 +216,8 @@ public class Utils {
         if (noise < 0) {
             throw new InputMismatchException("noise must be nonnegative");
         }
-        // get number of rows and number of columns
+        // get number of rows
         int n_rows = X.length;
-        int n_cols = X[0].length;
         // if noise is greater than 0, initialize the random number generator.
         // again, if rng == null, automatically seed.
         if (noise > 0) {
