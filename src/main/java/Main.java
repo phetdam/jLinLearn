@@ -4,6 +4,7 @@
  */
 
 import java.util.Random;
+import java.util.function.DoubleFunction;
 
 import jlinlearn.DMatrix;
 import static jlinlearn.Utils.*;
@@ -31,4 +32,5 @@ public class Main {
             System.out.printf("---  %2d\n", (int) data.get_y_train()[i]);
         }
     }
+
 }

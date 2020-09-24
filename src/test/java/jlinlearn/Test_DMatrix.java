@@ -56,17 +56,17 @@ class Test_DMatrix {
         assertEquals(2, data.n_val);
         assertEquals(5, data.n_dims);
         // check that indices chosen for training and validation are correct;
-        // val data should be first two rows and train data should be last two.
+        // val data should be last two rows and train data should be first two.
         for (int i = 0; i < data.n_train; i++) {
-            assertEquals(y[i], data.get_y_val()[i]);
+            assertEquals(y[i], data.get_y_train()[i]);
             for (int j = 0; j < data.n_dims; j++) {
-                assertEquals(X[i][j], data.get_X_val()[i][j]);
+                assertEquals(X[i][j], data.get_X_train()[i][j]);
             }
         }
         for (int i = 0; i < data.n_val; i++) {
-            assertEquals(y[i + 2], data.get_y_train()[i]);
+            assertEquals(y[i + 2], data.get_y_val()[i]);
             for (int j = 0; j < data.n_dims; j++) {
-                assertEquals(X[i + 2][j], data.get_X_train()[i][j]);
+                assertEquals(X[i + 2][j], data.get_X_val()[i][j]);
             }
         }
     }
